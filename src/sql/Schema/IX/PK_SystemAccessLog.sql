@@ -1,0 +1,1 @@
+ALTER TABLE dbo.SystemAccessLog ADD CONSTRAINT PK_SystemAccessLog PRIMARY KEY NONCLUSTERED (SystemAccessLogId) 
