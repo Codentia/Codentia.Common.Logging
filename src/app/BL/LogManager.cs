@@ -314,6 +314,52 @@ namespace Codentia.Common.Logging.BL
         }
 
         /// <summary>
+        /// Clears down logs.
+        /// </summary>
+        /// <param name="includeDatabase">if set to <c>true</c> [include database].</param>
+        /// <param name="includeFile">if set to <c>true</c> [include file].</param>
+        public void ClearDownLogs(bool includeDatabase, bool includeFile)
+        {
+            if (includeDatabase)
+            {
+                lock (_writerLock)
+                {
+                    Dictionary<LogMessageType, DateTime> retentionDates = new Dictionary<LogMessageType, DateTime>();
+                    retentionDates[LogMessageType.FatalError] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
+                    retentionDates[LogMessageType.NonFatalError] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
+                    retentionDates[LogMessageType.Information] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
+                    retentionDates[LogMessageType.UrlRequest] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
+
+                    Dictionary<LogMessageType, string>.Enumerator enumMappings = _mappingDatabaseName.GetEnumerator();
+                    while (enumMappings.MoveNext())
+                    {
+                        DatabaseLogWriter writer = new DatabaseLogWriter();
+                        writer.LogTarget = enumMappings.Current.Value;
+                        writer.CleanUp(0, 0, retentionDates);
+                        writer.Close();
+                        writer.Dispose();
+                    }
+                }
+            }
+
+            if (includeFile)
+            {
+                lock (_writerLock)
+                {
+                    IEnumerator<LogMessageType> files = _mappingFilename.Keys.GetEnumerator();
+                    while (files.MoveNext())
+                    {
+                        FileLogWriter writer = new FileLogWriter();
+                        writer.LogTarget = _mappingFilename[files.Current];
+                        writer.CleanUp(_fileRetentionSizeKB, _fileRetentionCount, null);
+                        writer.Close();
+                        writer.Dispose();
+                    }
+                }
+            }
+        }
+        
+        /// <summary>
         /// Stop processing and clean up the object immediately
         /// </summary>
         public void Dispose()
@@ -441,43 +487,7 @@ namespace Codentia.Common.Logging.BL
         {
             while (_running)
             {
-                if (_autoCleanUpDatabase)
-                {
-                    lock (_writerLock)
-                    {
-                        Dictionary<LogMessageType, DateTime> retentionDates = new Dictionary<LogMessageType, DateTime>();
-                        retentionDates[LogMessageType.FatalError] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
-                        retentionDates[LogMessageType.NonFatalError] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
-                        retentionDates[LogMessageType.Information] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
-                        retentionDates[LogMessageType.UrlRequest] = DateTime.Now.AddDays(-1 * _databaseRetentionDays);
-
-                        Dictionary<LogMessageType, string>.Enumerator enumMappings = _mappingDatabaseName.GetEnumerator();
-                        while (enumMappings.MoveNext())
-                        {
-                            DatabaseLogWriter writer = new DatabaseLogWriter();
-                            writer.LogTarget = enumMappings.Current.Value;
-                            writer.CleanUp(0, 0, retentionDates);
-                            writer.Close();
-                            writer.Dispose();
-                        }
-                    }
-                }
-
-                if (_autoCleanUpFile)
-                {
-                    lock (_writerLock)
-                    {
-                        IEnumerator<LogMessageType> files = _mappingFilename.Keys.GetEnumerator();
-                        while (files.MoveNext())
-                        {
-                            FileLogWriter writer = new FileLogWriter();
-                            writer.LogTarget = _mappingFilename[files.Current];
-                            writer.CleanUp(_fileRetentionSizeKB, _fileRetentionCount, null);
-                            writer.Close();
-                            writer.Dispose();
-                        }
-                    }
-                }
+                this.ClearDownLogs(_autoCleanUpDatabase, _autoCleanUpFile);
 
                 for (int i = 0; i < 300 && _running; i++)
                 {
