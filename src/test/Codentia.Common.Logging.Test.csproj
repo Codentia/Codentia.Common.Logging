@@ -38,20 +38,24 @@
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Codentia.Common.Data">
-      <HintPath>..\..\packages\Codentia.Test.dll.2.0.0-dev\lib\Codentia.Common.Data.dll</HintPath>
+    <Reference Include="Codentia.Common.Data, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Codentia.Common.Data.dll.4.0.0-dev-20151015210336\lib\Codentia.Common.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Codentia.Common.Helper">
-      <HintPath>..\..\packages\Codentia.Test.dll.2.0.0-dev\lib\Codentia.Common.Helper.dll</HintPath>
+    <Reference Include="Codentia.Common.Helper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Codentia.Common.Helper.dll.2.0.0-dev-20151015190952\lib\Codentia.Common.Helper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Codentia.Common.Types">
-      <HintPath>..\..\packages\Codentia.Test.dll.2.0.0-dev\lib\Codentia.Common.Types.dll</HintPath>
+    <Reference Include="Codentia.Common.Types, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Codentia.Common.Types.dll.2.0.0-dev-20151015203406\lib\Codentia.Common.Types.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Codentia.Test">
-      <HintPath>..\..\packages\Codentia.Test.dll.2.0.0-dev\lib\Codentia.Test.dll</HintPath>
+    <Reference Include="Codentia.Test, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Codentia.Test.dll.2.0.0-dev-20151016071421\lib\Codentia.Test.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\Codentia.Test.dll.2.0.0-dev\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codentia.Common.Logging", "src\app\Codentia.Common.Logging.csproj", "{F7A97F75-3D07-41C1-9264-9CBD7D022483}"
 EndProject
@@ -24,11 +24,7 @@ Global
 		{E8636823-8F87-42B1-BDA1-E3B17409B38C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8636823-8F87-42B1-BDA1-E3B17409B38C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{293B270E-76DE-45EC-BBE4-21858030DD6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{293B270E-76DE-45EC-BBE4-21858030DD6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{293B270E-76DE-45EC-BBE4-21858030DD6C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{293B270E-76DE-45EC-BBE4-21858030DD6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{293B270E-76DE-45EC-BBE4-21858030DD6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{293B270E-76DE-45EC-BBE4-21858030DD6C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
