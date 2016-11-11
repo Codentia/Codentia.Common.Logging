@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Serialization.Formatters;
 using System.Threading;
 using System.Web;
 using Codentia.Common.Logging.DL;
@@ -197,7 +198,10 @@ namespace Codentia.Common.Logging.BL
                             props["port"] = _portNumber;
                             props["name"] = System.AppDomain.CurrentDomain.FriendlyName;
 
-                            channel = new TcpChannel(props, null, null);
+                            // Creating a custom formatter for a TcpChannel sink chain.
+                            BinaryServerFormatterSinkProvider provider = new BinaryServerFormatterSinkProvider();
+                            provider.TypeFilterLevel = TypeFilterLevel.Full;
+                            channel = new TcpChannel(props, null, provider);
                             ChannelServices.RegisterChannel(channel, false);
                             RemotingConfiguration.RegisterWellKnownServiceType(typeof(LogManager), "LogManager", WellKnownObjectMode.Singleton);
                             _instance = (LogManager)Activator.GetObject(typeof(LogManager), string.Format("tcp://localhost:{0}/LogManager", _portNumber));
